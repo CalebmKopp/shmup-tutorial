@@ -262,6 +262,21 @@ function update_game()
 	--change ship draw coords
 	ship.x += ship.xspd
 	ship.y += ship.yspd
+	
+		--checking if we hit edge
+	if ship.x < 0 then
+		ship.x=0
+	end
+	if ship.x > 120 then
+		ship.x=120
+	end	
+	if ship.y < 0 then
+		ship.y=0
+	end
+	if ship.y > 120 then
+		ship.y=120
+	end
+	
 	--change the boost coords
 	boost.x = ship.x
 	boost.y = ship.y+8
@@ -290,6 +305,7 @@ function update_game()
 	for en_ref in all(enemies) do
 		if col(en_ref,ship) then
 			lives-=1
+			sfx(0)
 		end
 	end
 	--animate flame
@@ -301,20 +317,6 @@ function update_game()
 	--animate muzzle flash
 	if muzzle>0 then
 		muzzle-=1
-	end
-
-	--checking if we hit edge
-	if ship.x > 120 then
-		ship.x=0
-	end
-	if ship.x < 0 then
-		ship.x=120
-	end	
-	if ship.y > 120 then
-		ship.y=0
-	end
-	if ship.y < 0 then
-		ship.y=120
 	end
 	
 end
