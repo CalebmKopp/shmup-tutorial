@@ -70,7 +70,7 @@ function start_game()
 	myen.spr=55
 	add(enemies, myen)
 	score=10000
-	lives=3
+	lives=1
 	bombs=2
 end
 -->8
@@ -268,11 +268,6 @@ function update_game()
 		shoot_bul("std")
 	end
 	
-	--todo: gameover temp button
-	if btnp(4) then
-		mode="over"
-	end
-	
 	--change ship draw coords
 	ship.x += ship.xspd
 	ship.y += ship.yspd
@@ -320,8 +315,16 @@ function update_game()
 		if col(en_ref,ship) then
 			lives-=1
 			sfx(0)
+			--react to collision, del en
+			del(enemies,en_ref)
 		end
 	end
+
+	if lives <= 0 then
+		mode="over"
+		return
+	end
+
 	--animate flame
 	boost.spr+=1
 	if boost.spr>=11 then
