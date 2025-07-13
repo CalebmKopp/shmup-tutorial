@@ -70,7 +70,7 @@ function start_game()
 			y=8,
 			spr=55
 		}
-	add(enemies, myen)
+		add(enemies, myen)
 	end
 	
 	score=10000
