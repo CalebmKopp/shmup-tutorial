@@ -49,7 +49,9 @@ function start_game()
 	--	initial delay before
 	-- it repeats is 4 frames
 	-- instead of 15
-	poke(0x5f5c, 4)
+	local delay=6
+	poke(0x5f5c, delay)
+	poke(0x5f5d, delay)
 	ship={
 		x=64,
 		y=64,
