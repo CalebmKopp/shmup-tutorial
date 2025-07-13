@@ -8,6 +8,14 @@
 - program collision between bullets and enemies
 ---
 - this requires, a lot of math
+- LOL it actually doesn't
+  - just like, take your existing enemies update for loop
+  - and add in a check for every bullet on screen
+  - if, there's a bullet and enemy collision
+    - delete enemy
+    - delete bullet
+    - add obj to `deads` list
+  - then just render/update all the `deads` - which, is just showing an explosion
 ## Challenge 2
 - fix the shoot-button-hold bug
   - as of right now, when you hold the shoot button
