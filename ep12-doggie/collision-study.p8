@@ -50,14 +50,16 @@ function start_game()
 	-- it repeats is 4 frames
 	-- instead of 15
 	poke(0x5f5c, 4)
-	
 	ship={
 		x=64,
 		y=64,
 		xspd=0,
 		yspd=0,
-		spr=36
+		spr=36,
+		invuln=false,
+		invuln_t=0
 	}
+	
 	boost={
 		spr=6,
 		x=ship.x,
@@ -327,6 +329,7 @@ function update_game()
 			--reduce lives
 			lives-=1
 			--ship invuln start
+			
 		end
 	end
 
