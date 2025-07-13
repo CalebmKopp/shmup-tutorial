@@ -63,13 +63,16 @@ function start_game()
 	
 	buls={}
 	enemies={}
-	local myen={
-		x=60,
-		y=15,
-		spr=55
-	}
-
+	
+	for i=1,3 do
+		local myen={
+			x=i*30,
+			y=8,
+			spr=55
+		}
 	add(enemies, myen)
+	end
+	
 	score=10000
 	lives=3
 	bombs=2
