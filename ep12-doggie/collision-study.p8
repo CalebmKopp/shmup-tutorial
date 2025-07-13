@@ -45,6 +45,11 @@ end
 
 function start_game()
 	mode='game'
+	--when holding down any button
+	--	initial delay before
+	-- it repeats is 4 frames
+	-- instead of 15
+	poke(0x5f5c, 4)
 	
 	ship={
 		x=64,
