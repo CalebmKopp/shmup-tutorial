@@ -6,6 +6,8 @@
 
 ## Challenge 1
 - program collision between bullets and enemies
+---
+- this requires, a lot of math
 ## Challenge 2
 - fix the shoot-button-hold bug
   - as of right now, when you hold the shoot button
@@ -23,12 +25,16 @@
 - so, what we can do is just change the first address from `15` to `4` and that should fix the problem
 ## Challenge 3
 - Instead of when the enemy hits your ship, you enter an invulnerability state instead of just losing all your lives instantly
-- added 3 props to ship, `hide`,`invuln`,`invuln_t`
+---
+- added 3 props to ship, `hide`,`invuln`,`invuln_t`, initialized at `false, false, 0`
 - if `hide` is true, then the ship spr will become fullblack
 - if `invuln` is true, it starts a 1 second timer, which is tracked in `invuln_t`
 - During this 1 second, the `ship.hide` will oscillate between true and false - which "flickers" the ship sprite
 - the boost sprite is always shown, letting the player still keep track of where they are
-
+- Also experimenting with different invuln flickering
+  - just a square
+  - a square with an outline
+  - no sprite at all (standard)
 ## Notes
 - Collision detection is surprisingly simple, as long as your sprites are both 8px by 8px
 - It becomes more difficult later, when sprites are larger, for example
