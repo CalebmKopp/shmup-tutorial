@@ -12,6 +12,15 @@
   - it fires one bullet, and then after a bit it starts firing bullets rapidly
   - we want it such that when you hold the shoot button it fires rapidly right away
   - as well, want to be able to register every time our shoot button is pressed with exact frequency, whereas right now it's moreso whenever the game decides that `btnp(...)` is true again
+---
+- so, this can be fixed by editing the pico8 memory directly
+  ```lua
+  poke(0x5f5c, delay) -- set the initial delay before repeating. 255 means never repeat.
+  poke(0x5f5d, delay) -- set the repeating delay.
+  ```
+- Basically there's two delays - when holding down a button and detecting something with btnp, there's a baked in 15 frame delay before a super-repeat happens
+- and that super-repeat delay is 4 frames
+- so, what we can do is just change the first address from `15` to `4` and that should fix the problem
 ## Challenge 3
 - Instead of when the enemy hits your ship, you enter an invulnerability state instead of just losing all your lives instantly
 
