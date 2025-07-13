@@ -65,12 +65,13 @@ function start_game()
 	enemies={}
 	local myen={
 		x=60,
-		y=15
+		y=15,
+		spr=55
 	}
-	myen.spr=55
+
 	add(enemies, myen)
 	score=10000
-	lives=1
+	lives=3
 	bombs=2
 end
 -->8
