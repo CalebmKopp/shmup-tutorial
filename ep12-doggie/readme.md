@@ -23,6 +23,11 @@
 - so, what we can do is just change the first address from `15` to `4` and that should fix the problem
 ## Challenge 3
 - Instead of when the enemy hits your ship, you enter an invulnerability state instead of just losing all your lives instantly
+- added 3 props to ship, `hide`,`invuln`,`invuln_t`
+- if `hide` is true, then the ship spr will become fullblack
+- if `invuln` is true, it starts a 1 second timer, which is tracked in `invuln_t`
+- During this 1 second, the `ship.hide` will oscillate between true and false - which "flickers" the ship sprite
+- the boost sprite is always shown, letting the player still keep track of where they are
 
 ## Notes
 - Collision detection is surprisingly simple, as long as your sprites are both 8px by 8px
