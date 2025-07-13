@@ -16,7 +16,6 @@
     - delete bullet
     - add obj to `deads` list
   - then just render/update all the `deads` - which, is just showing an explosion
-  - which token
 ## Challenge 2
 - fix the shoot-button-hold bug
   - as of right now, when you hold the shoot button
