@@ -90,4 +90,4 @@ xychart-beta
         ```
     - where 
       - **n** controls the *speed* of switching between `state_a()` and `state_b()`
-      - **m** controls the *ratio* of time spent in `state_a()` and `state_b()`
+      - **m** controls the *ratio* of time spent in `state_a()` vs `state_b()`
