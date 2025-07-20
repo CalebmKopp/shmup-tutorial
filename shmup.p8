@@ -63,18 +63,12 @@ function start_game()
 	buls={}
 	enemies={}
 	
-	for i=1,3 do
-		local myen={
-			x=i*30,
-			y=8,
-			spr=55
-		}
-		add(enemies, myen)
-	end
+	spawnen()
 	
 	score=10000
 	lives=3
 	bombs=2
+
 end
 -->8
 -- tools
@@ -234,6 +228,15 @@ function col(a,b)
 	
 	return true
 end
+
+function spawnen()
+	local myen={
+		x=rnd(120),
+		y=-8,
+		spr=55
+	}
+	add(enemies, myen)
+end
 -->8
 -- update
 function update_game()
@@ -320,6 +323,7 @@ function update_game()
 				del(enemies, en_ref)
 				del(buls, bul_ref)
 				sfx(3)
+				spawnen()
 			end
 		end
 	end
@@ -332,6 +336,7 @@ function update_game()
 			sfx(0)
 			--react to collision, del en
 			del(enemies,en_ref)
+			spawnen()
 		end
 	end
 
