@@ -92,3 +92,7 @@ xychart-beta
       - **t** is a framecount that starts at 0 and advances +1 every frame
       - **n** controls the *speed* of switching between `state_a()` and `state_b()`
       - **m** controls the *ratio* of time spent in `state_a()` vs `state_b()`
+    - bounds and generalities
+      - **t** > 0 | only goes up
+      - **n** > 1 | decimal, bigger number slower speed
+      - **m** > -1 and **m** < 1 | decimal, lower number favors state A and higher number favors state B
