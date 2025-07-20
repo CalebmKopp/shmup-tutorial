@@ -88,6 +88,7 @@ xychart-beta
         ```lua
         if sin(t/n) > m then state_a() else state_b() end
         ```
-    - where 
+    - where
+      - **t** is a framecount that starts at 0 and advances +1 every frame
       - **n** controls the *speed* of switching between `state_a()` and `state_b()`
       - **m** controls the *ratio* of time spent in `state_a()` vs `state_b()`
