@@ -2,6 +2,10 @@ pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
 -- main
+-- todo
+--	-explosions
+--	-hit reaction
+
 function _init()
 	--black screen
 	cls(0)
@@ -66,7 +70,10 @@ function start_game()
 	spawnen()
 	
 	score=10000
-	lives=3
+	
+	lives=4
+	invuln=0
+
 	bombs=2
 
 end
@@ -299,20 +306,16 @@ function update_game()
 	--move the bullets
 	update_buls()
 	
-		--this loop doesnt care
-		-- if you del(...)
-		-- in the middle of iterating
+	--move the enemies
 	for en_ref in all(enemies) do
 		en_ref.y+=1
-		--animate the enemy 
-		--variable speed animation
-		-- on the fly!
 		en_ref.spr+=0.4
 		if en_ref.spr>=58 then
 			en_ref.spr=54
 		end			
 		if en_ref.y>136 then 
-			del(enemies, en_ref) 
+			del(enemies, en_ref)
+			spawnen() 
 		end
 	end
 	
@@ -330,13 +333,13 @@ function update_game()
 	
 	
 	--collision ship x enemies
-	for en_ref in all(enemies) do
-		if col(en_ref,ship) then
-			lives-=1
-			sfx(0)
-			--react to collision, del en
-			del(enemies,en_ref)
-			spawnen()
+	if invuln==0 then
+		for en_ref in all(enemies) do
+			if col(en_ref,ship) then
+				lives-=1
+				sfx(0)
+				invuln=30
+			end
 		end
 	end
 
