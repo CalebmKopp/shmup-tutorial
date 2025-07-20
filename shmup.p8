@@ -48,7 +48,7 @@ end
 
 function start_game()
 	mode='game'
-	
+	t=0
 	ship={
 		x=64,
 		y=64,
@@ -240,6 +240,7 @@ function spawnen()
 	local myen={
 		x=rnd(120),
 		y=-8,
+		yspd=1.5,
 		spr=55
 	}
 	add(enemies, myen)
@@ -308,7 +309,7 @@ function update_game()
 	
 	--move the enemies
 	for en_ref in all(enemies) do
-		en_ref.y+=1
+		en_ref.y+=en_ref.yspd
 		en_ref.spr+=0.4
 		if en_ref.spr>=58 then
 			en_ref.spr=54
@@ -331,9 +332,9 @@ function update_game()
 		end
 	end
 	
-	
-	--collision ship x enemies
-	if invuln==0 then
+	--can be hit
+	if invuln<=0 then
+		--collision ship x enemies
 		for en_ref in all(enemies) do
 			if col(en_ref,ship) then
 				lives-=1
@@ -341,7 +342,11 @@ function update_game()
 				invuln=30
 			end
 		end
+	else
+		--cannot be hit
+		invuln-=1
 	end
+	
 
 	if lives <= 0 then
 		mode="over"
@@ -396,9 +401,14 @@ function draw_game()
 	drw_stars()
 	-- the ship should always be
 	-- 	the last thing drawn
-	drw_obj(ship)
+	if invuln<=0 then
+		drw_obj(ship)
+	else
+	if sin(t/5)>-0.1 then
+			drw_obj(ship)
+		end
+	end
 	drw_obj(boost)
-	
 
 	--draw enemies
 	for en_ref in all(enemies) do
@@ -432,6 +442,7 @@ function draw_game()
 			spr(93,(i*9)+84,1)
 		end
 	end
+	print("frame:"..t,80,100,7)
 end
 
 function draw_start()
