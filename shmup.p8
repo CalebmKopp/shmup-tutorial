@@ -11,7 +11,6 @@ function _init()
 	mode="start"
 	--dev variables
 	should_skip_intro=true
-	--
 	init_state_flags()
 	init_stars()
 end
@@ -315,7 +314,7 @@ function update_game()
 	end
 	
 	--collision enemies x bullets
-	for en_ref in all(enemites) do
+	for en_ref in all(enemies) do
 		for bul_ref in all(buls) do
 			if col(bul_ref,en_ref) then
 				del(enemies, en_ref)
