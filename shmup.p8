@@ -70,7 +70,7 @@ function start_game()
 	
 	spawnen()
 	
-	score=10000
+	score=0
 	
 	lives=4
 	invuln=0
@@ -332,6 +332,7 @@ function update_game()
 				del(enemies, en_ref)
 				del(buls, bul_ref)
 				sfx(3)
+				score+=1
 				spawnen()
 			end
 		end
