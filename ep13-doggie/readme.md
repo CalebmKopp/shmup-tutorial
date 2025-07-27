@@ -1,17 +1,29 @@
 # ep13 - invulnerability
 
 ## Objectives
-- 
+- learn about oscillation using sin(x) function
+- learn about frame counters
+  - rising counters - for passing into sin and doing persistent/consistent effects
+  - falling counters - for keeping framecount of events happening (iframes left, bullet cooldown)
 
 ## Challenge 1
-
+- Try to do explosions
+  - first way, make an explosion sprite and play it after a enemy dies, and disappears when animation is over (did this before in ep12 doggie, but probably worse)
+  - second way, is similar to our muzzle flash. making a circle that grows then disappears - or maybe one white circle followed by a black circle after to get the dissipating effect 
+    - I think, I wanna try this one given my new understanding of falling frame counters,
+    - so like, when enemy dies, grow a circle at that position, of white (or yellow, whatever color), then grow a black one a few frames after
 ## Challenge 2
-
-## Challenge 3
-
+- when you run out of lives, explode the spaceship, before showing game over screen
 ## Notes
+- it's very fun, learning game development in this way
+- since, I already know "software development" and even "UI/UX development" to a certain extent, the idea of writing code to solve a problem to make something persist on a screen is nothing new to me
+- however, UI/UX is primarily static trees of visual nodes, rendered in a specific order, and hydrated and changed by backend data only when necessary
+- the idea of thinking in a framecounter, as your fundamental mode of operation, and that you WANT things to be changing every single frame, is quite different
+- it's fun to start to build together design patterns and building blocks like rising and falling frame counters, OOP polymorphic functions, and balancing readability/verbosity with speed and execution of the code
+- also quite the adjustment to not having a standard "console.log(...)" or breakpoint system in pico-8 ; if something is wrong you gotta figure it out as the wheel turns
 
-### bullet cooldown timer
+#### bullet cooldown timer
+
 - in its default state, our code will spawn a bullet every frame that `btn(5)` is pressed
 ```lua
 function shoot_bul(kind)
@@ -72,7 +84,9 @@ end
   - 17 - bullet spawned, `bultimer: 6` again
 - This is actually, an off by one error - we want to be able to shoot AGAIN on the 6th frame, not have 6 frames between each bullet
 - this is fixed by removing the else, and on that first cycle where we set `bultimer: 6` also reduce it to `5` immediately
-### `invuln` blinking
+
+#### `invuln` blinking
+
 - using the `sin(x)` function in pico8, we can create oscillations
 ```lua
 --_init()
