@@ -185,9 +185,9 @@ function shoot_bul(kind)
 		add(buls, newbul)
 		sfx(1)
 		muzzle=4
-		bultimer=5
+		bultimer=10
 	end
-	bultimer-=1
+	bultimer-=2.3
 end
 
 function ani_single_bul(bul_ref)
