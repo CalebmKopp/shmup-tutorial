@@ -339,7 +339,7 @@ function update_game()
 			if col(en_ref,ship) then
 				lives-=1
 				sfx(0)
-				invuln=30
+				invuln=60
 			end
 		end
 	else

@@ -49,7 +49,7 @@ drw_obj(boost)
 - we start at 0 iframes, and when we're hit by an enemy, we set this to 30
 - if we ever have iframes, we don't need to check collision, just remove 1 iframe from the counter
 - In the draw function, if we're at 0 or less iframes we draw the ship like normal
-- otherwise, **we draw the ship sometimes**, and draw nothing other times (but always draw the boost for tracking purposes)
+- otherwise, **we draw the ship sometimes** , and draw nothing other times (or put another way, make the ship blink)
 ```mermaid
 xychart-beta
     title "Approximation of a Sine Wave"
