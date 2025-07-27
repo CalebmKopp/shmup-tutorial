@@ -61,6 +61,7 @@ function start_game()
 		x=ship.x,
 		y=ship.y+8
 	}
+	bultimer=0
 	muzzle=0
 	bullspd=3 --3.5 default
 	
@@ -173,16 +174,20 @@ function blink(blink_cols)
 end	
 
 function shoot_bul(kind)
-	local newbul={
-		x=ship.x,
-		y=ship.y-1,
-		kind=kind,
-		step=1,
-		spr=24
-	}
-	add(buls, newbul)
-	sfx(1)
-	muzzle=4
+	if bultimer<= 0 then
+		local newbul={
+			x=ship.x,
+			y=ship.y-1,
+			kind=kind,
+			step=1,
+			spr=24
+		}
+		add(buls, newbul)
+		sfx(1)
+		muzzle=4
+		bultimer=5
+	end
+	bultimer-=1
 end
 
 function ani_single_bul(bul_ref)
@@ -278,7 +283,7 @@ function update_game()
 	end
 	
 	--shoot
-	if btnp(5) then
+	if btn(5) then
 		shoot_bul("std")
 	end
 	

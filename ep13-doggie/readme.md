@@ -10,6 +10,69 @@
 ## Challenge 3
 
 ## Notes
+
+### bullet cooldown timer
+- in its default state, our code will spawn a bullet every frame that `btn(5)` is pressed
+```lua
+function shoot_bul(kind)
+  local newbul={
+    x=ship.x,
+    y=ship.y-1,
+    kind=kind,
+    step=1,
+    spr=24
+  }
+  add(buls, newbul)
+  sfx(1)
+  muzzle=4
+end
+...
+if btn(5) then
+  shoot_bul('std')
+end
+```
+- in order to mitigate this, we can use another global cooldown timer - and when we shoot, set a number of frames that needs to decrement before we can shoot again. Same mechanism as tracking our invulnerability frames.
+```lua
+--_init()
+bultimer=0
+--_update()
+function shoot_bul(kind)
+	if bultimer<= 0 then
+		local newbul={
+			x=ship.x,
+			y=ship.y-1,
+			kind=kind,
+			step=1,
+			spr=24
+		}
+		add(buls, newbul)
+		sfx(1)
+		muzzle=4
+		bultimer=6
+	else
+	  bultimer-=1
+  end
+end
+...
+if btn(5) then
+  shoot_bul('std')
+end
+```
+- the above code says when we have no bullet cooldown, spawn a bullet, but then set our timer to 6 frames
+- next frame, we're still holding the shoot button, so we go into the shoot_bul function - however, our `bultimer` is 6, so we dont add any bullets to the bullet array, but instead reduce that frame timer by one
+- and this happens, a total of six times
+- framestep
+  - 10 - bullet spawned, `bultimer: 6`
+  - 11 - button held, `bultimer: 5`
+  - 12 - `bultimer: 4`
+  - 13 - `bultimer: 3`
+  - 14 - `bultimer: 2`
+  - 15 - `bultimer: 1`
+  - 16 - set `bultimer: 0`, but still no shooting
+  - 17 - bullet spawned, `bultimer: 6` again
+- This is actually, an off by one error - we want to be able to shoot AGAIN on the 6th frame, not have 6 frames between each bullet
+- this is fixed by removing the else, and on that first cycle where we set `bultimer: 6` also reduce it to `5` immediately
+### `invuln` blinking
 - using the `sin(x)` function in pico8, we can create oscillations
 ```lua
 --_init()
