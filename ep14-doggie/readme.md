@@ -10,6 +10,9 @@
 - when player is hit, make the ship flash (using pallette swapping) instead of oscillating on/off
 ## Challenge 3
 - when a bullet hits an enemy, make a small contact explosion - nothing fancy 
+  - I think the way i wanna do this, is with `circfill()`
+  - basically, when a bullet is about to be deleted due to contact with an enemy, draw circles that are bullet colored, then draw a black circle in the middle that expands out to subsume that bullet impact circle
+  - since, i am silly and i have these cute animated oscillating bullets, could try to do double contact but let's just start with one for now
 ## Notes
 - "An explosion must always been bigger than the thing it explodes" important axiom
 - maybe next episode, is make explosions procedurally - since, when we create explosions manually in the spritesheet with a sprite index array and manual sprite choices in that array, it takes up a lot of space, tokens, and time/effort
