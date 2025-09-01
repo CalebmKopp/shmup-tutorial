@@ -247,6 +247,7 @@ function spawnen()
 		y=-8,
 		yspd=1.5,
 		hp=5,
+		flash=0,
 		spr=55
 	}
 	add(enemies, myen)
@@ -333,6 +334,7 @@ function update_game()
 				del(buls, bul_ref)
 				en_ref.hp-=1
 				sfx(4)
+				en_ref.flash=2
 				if en_ref.hp<=0 then
 					del(enemies, en_ref)
 					--explode(en_ref)
@@ -424,7 +426,14 @@ function draw_game()
 
 	--draw enemies
 	for en_ref in all(enemies) do
+		if en_ref.flash>=0 then
+			en_ref.flash-=1
+			pal(8,7)
+			pal(9,7)
+			pal(1,7)
+		end
 		drw_obj(en_ref)
+		pal()
 	end
 	--draw bullets
 	for bul_ref in all(buls) do
