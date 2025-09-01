@@ -180,6 +180,7 @@ function shoot_bul(kind)
 			y=ship.y-1,
 			kind=kind,
 			step=1,
+			dmg=5,
 			spr=24
 		}
 		add(buls, newbul)
@@ -246,7 +247,7 @@ function spawnen()
 		x=rnd(120),
 		y=-8,
 		yspd=1.5,
-		hp=5,
+		hp=20,
 		flash=0,
 		spr=55
 	}
@@ -332,7 +333,7 @@ function update_game()
 		for bul_ref in all(buls) do
 			if col(bul_ref,en_ref) then
 				del(buls, bul_ref)
-				en_ref.hp-=1
+				en_ref.hp-=bul_ref.dmg
 				sfx(4)
 				en_ref.flash=2
 				if en_ref.hp<=0 then
