@@ -2,6 +2,10 @@ pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
 -- main
+-- todo
+--	-explosions
+--	-hit reaction
+
 function _init()
 	--black screen
 	cls(0)
@@ -11,7 +15,6 @@ function _init()
 	mode="start"
 	--dev variables
 	should_skip_intro=true
-	--
 	init_state_flags()
 	init_stars()
 end
@@ -45,7 +48,7 @@ end
 
 function start_game()
 	mode='game'
-	
+	t=0
 	ship={
 		x=64,
 		y=64,
@@ -58,24 +61,22 @@ function start_game()
 		x=ship.x,
 		y=ship.y+8
 	}
+	bultimer=0
 	muzzle=0
 	bullspd=3 --3.5 default
 	
 	buls={}
 	enemies={}
 	
-	for i=1,3 do
-		local myen={
-			x=i*30,
-			y=8,
-			spr=55
-		}
-		add(enemies, myen)
-	end
+	spawnen()
 	
-	score=10000
-	lives=3
+	score=0
+	
+	lives=4
+	invuln=0
+
 	bombs=2
+
 end
 -->8
 -- tools
@@ -173,16 +174,20 @@ function blink(blink_cols)
 end	
 
 function shoot_bul(kind)
-	local newbul={
-		x=ship.x,
-		y=ship.y-1,
-		kind=kind,
-		step=1,
-		spr=24
-	}
-	add(buls, newbul)
-	sfx(1)
-	muzzle=4
+	if bultimer<= 0 then
+		local newbul={
+			x=ship.x,
+			y=ship.y-1,
+			kind=kind,
+			step=1,
+			spr=24
+		}
+		add(buls, newbul)
+		sfx(1)
+		muzzle=4
+		bultimer=10
+	end
+	bultimer-=2.3
 end
 
 function ani_single_bul(bul_ref)
@@ -235,6 +240,16 @@ function col(a,b)
 	
 	return true
 end
+
+function spawnen()
+	local myen={
+		x=rnd(120),
+		y=-8,
+		yspd=1.5,
+		spr=55
+	}
+	add(enemies, myen)
+end
 -->8
 -- update
 function update_game()
@@ -268,7 +283,7 @@ function update_game()
 	end
 	
 	--shoot
-	if btnp(5) then
+	if btn(5) then
 		shoot_bul("std")
 	end
 	
@@ -297,32 +312,48 @@ function update_game()
 	--move the bullets
 	update_buls()
 	
-		--this loop doesnt care
-		-- if you del(...)
-		-- in the middle of iterating
+	--move the enemies
 	for en_ref in all(enemies) do
-		en_ref.y+=1
-		--animate the enemy 
-		--variable speed animation
-		-- on the fly!
+		en_ref.y+=en_ref.yspd
 		en_ref.spr+=0.4
 		if en_ref.spr>=58 then
 			en_ref.spr=54
 		end			
 		if en_ref.y>136 then 
-			del(enemies, en_ref) 
+			del(enemies, en_ref)
+			spawnen() 
 		end
 	end
 	
-	--collision ship x enemies
+	--collision enemies x bullets
 	for en_ref in all(enemies) do
-		if col(en_ref,ship) then
-			lives-=1
-			sfx(0)
-			--react to collision, del en
-			del(enemies,en_ref)
+		for bul_ref in all(buls) do
+			if col(bul_ref,en_ref) then
+				del(enemies, en_ref)
+				del(buls, bul_ref)
+				--explode(en_ref)
+				sfx(3)
+				score+=1
+				spawnen()
+			end
 		end
 	end
+	
+	--can be hit
+	if invuln<=0 then
+		--collision ship x enemies
+		for en_ref in all(enemies) do
+			if col(en_ref,ship) then
+				lives-=1
+				sfx(0)
+				invuln=60
+			end
+		end
+	else
+		--cannot be hit
+		invuln-=1
+	end
+	
 
 	if lives <= 0 then
 		mode="over"
@@ -377,9 +408,14 @@ function draw_game()
 	drw_stars()
 	-- the ship should always be
 	-- 	the last thing drawn
-	drw_obj(ship)
+	if invuln<=0 then
+		drw_obj(ship)
+	else
+	if sin(t/5)>-0.1 then
+			drw_obj(ship)
+		end
+	end
 	drw_obj(boost)
-	
 
 	--draw enemies
 	for en_ref in all(enemies) do
@@ -413,6 +449,7 @@ function draw_game()
 			spr(93,(i*9)+84,1)
 		end
 	end
+	print("frame:"..t,80,100,7)
 end
 
 function draw_start()
@@ -538,3 +575,4 @@ __sfx__
 000100001d612216123961239612396123c6123d6123d61225612256122561226612266122761227612286122661224612206121d612196121861201612006120061200612006120061201612006120061200612
 000100003c513365132e5332853324533215031b50335523345230d53310533115330e5030c503085330753307503095030d5030f5031a503255032f50334503375031d5031f5031c50317503155031350312503
 0001000018550155520f5520c5520b5520b5320d5221055216532305423253233522325222d5520a5520a5520d5521154218542235322a5322b53216512025021e5021d5021b5021a50219502195021750216502
+000100002c60332753076532b5531d65310633075230562303623026130266302613026030c60302623066030760302633026030260302633026030260302623006031d6031f6031c60317603156031360312603
