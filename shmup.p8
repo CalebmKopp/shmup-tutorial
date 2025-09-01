@@ -428,9 +428,9 @@ function draw_game()
 	for en_ref in all(enemies) do
 		if en_ref.flash>=0 then
 			en_ref.flash-=1
-			pal(8,7)
-			pal(9,7)
-			pal(1,7)
+			for i=1,15 do
+				pal(i,7)
+			end
 		end
 		drw_obj(en_ref)
 		pal()
