@@ -219,9 +219,9 @@ function update_buls()
 	end
 end
 
-function drw_obj(obj_ref,w,h)
-	w=w or 1
-	h=h or 1
+function drw_obj(obj_ref)
+	w=obj_ref.w or 1
+	h=obj_ref.h or 1
 	spr(obj_ref.spr, obj_ref.x, obj_ref.y, w, h)
 end
 
@@ -460,7 +460,7 @@ function draw_game()
 	end
 	
 	--draw booms
-	local boom_sprs={64,64,64,66,68,68,70,72,72}
+	local boom_ages={64,64,64,66,68,68,70,72,72}
 	for boom_ref in all(booms) do
 		--local variable for some
 		--	readability
@@ -469,15 +469,13 @@ function draw_game()
 			y=boom_ref.y,
 			w=2,
 			h=2,
-			spr=flr(boom_ref.age)
+			spr=boom_ages[flr(boom_ref.age)]
 		}	
-		b.spr=boom_sprs[b.spr]
 		
-		spr(b.spr,b.x,b.y,b.w,b.h)
-		
+		drw_obj(b)
 		
 		boom_ref.age+=1
-		if (boom_ref.age>#boom_sprs) then
+		if (boom_ref.age>#boom_ages) then
 			del(booms, boom_ref)
 		end
 	end
