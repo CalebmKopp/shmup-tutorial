@@ -498,7 +498,7 @@ function draw_game()
 			spr(93,(i*9)+84,1)
 		end
 	end
-	print("frame:"..t,80,100,7)
+	-- print("frame:"..t,80,100,7)
 end
 
 function draw_start()
