@@ -67,6 +67,7 @@ function start_game()
 	
 	buls={}
 	enemies={}
+	booms={}
 	
 	spawnen()
 	
@@ -218,8 +219,10 @@ function update_buls()
 	end
 end
 
-function drw_obj(obj_ref)
-	spr(obj_ref.spr, obj_ref.x, obj_ref.y)
+function drw_obj(obj_ref,w,h)
+	w=w or 1
+	h=h or 1
+	spr(obj_ref.spr, obj_ref.x, obj_ref.y, w, h)
 end
 
 function col(a,b)
@@ -252,6 +255,15 @@ function spawnen()
 		spr=55
 	}
 	add(enemies, myen)
+end
+
+function explode(x,y)
+	local boom_ref={
+	 x=x-4,
+	 y=y-4,
+	 spr=64,
+	}
+	add(booms,boom_ref)
 end
 -->8
 -- update
@@ -338,7 +350,7 @@ function update_game()
 				en_ref.flash=2
 				if en_ref.hp<=0 then
 					del(enemies, en_ref)
-					--explode(en_ref)
+					explode(en_ref.x,en_ref.y)
 					sfx(3)
 					score+=1
 					spawnen()
@@ -444,6 +456,11 @@ function draw_game()
 	if muzzle>0 then
 		circfill(ship.x+3,ship.y-2,muzzle,7)
 		circfill(ship.x+4,ship.y-2,muzzle,7)
+	end
+	
+	--draw booms
+	for boom_ref in all(booms) do
+		drw_obj(boom_ref,2,2)
 	end
 	
 	-- health ui
