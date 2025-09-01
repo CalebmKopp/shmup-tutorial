@@ -13,11 +13,21 @@
   - I think the way i wanna do this, is with `circfill()`
   - basically, when a bullet is about to be deleted due to contact with an enemy, draw circles that are bullet colored, then draw a black circle in the middle that expands out to subsume that bullet impact circle
   - since, i am silly and i have these cute animated oscillating bullets, could try to do double contact but let's just start with one for now
+  - so, i want to freeboot this kind of code
+  ```lua
+  --_draw()
+	if muzzle>0 then
+		circfill(ship.x+3,ship.y-2,muzzle,7)
+		circfill(ship.x+4,ship.y-2,muzzle,7)
+	end
+  ```
 ## Notes
 - "An explosion must always been bigger than the thing it explodes" important axiom
 - maybe next episode, is make explosions procedurally - since, when we create explosions manually in the spritesheet with a sprite index array and manual sprite choices in that array, it takes up a lot of space, tokens, and time/effort
 - drawing explosions on dead enemies
     ```lua
+        --_draw()
+        ...
         --draw booms
         local boom_ages={64,64,64,66,68,68,70,72,72}
         for boom_ref in all(booms) do
