@@ -51,7 +51,7 @@ function start_game()
 	-- instead of 15
 	local bul_delay=6
 	poke(0x5f5c, bul_delay)
-	poke(0x5f5d, bul_delayelay)
+	poke(0x5f5d, bul_delay)
 	ship={
 		x=64,
 		y=64,
