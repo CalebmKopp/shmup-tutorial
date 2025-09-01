@@ -331,7 +331,7 @@ function update_game()
 			if col(bul_ref,en_ref) then
 				del(enemies, en_ref)
 				del(buls, bul_ref)
-				explode(en_ref)
+				--explode(en_ref)
 				sfx(3)
 				score+=1
 				spawnen()
