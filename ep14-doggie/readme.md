@@ -2,3 +2,5 @@
 
 ## Objectives
 - learn about making explosions
+
+## Notes
