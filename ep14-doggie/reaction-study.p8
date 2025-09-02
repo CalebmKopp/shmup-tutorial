@@ -247,9 +247,9 @@ function spawnen()
 		hp=15,
 		flash=0,
 		spr=55,
-		kind=flr(rnd(3))
+		kind=rnd(3)\1
 	}
-	debug("t:"..t.." kind:"..myen.kind)
+	debug("kind:"..myen.kind.." t:"..t)
 	add(enemies, myen)
 end
 
@@ -449,18 +449,18 @@ function draw_game()
 
 	--draw enemies
 	for en_ref in all(enemies) do
-		if en_ref.flash>=0 then
-			en_ref.flash-=1
-			for i=1,15 do
-				pal(i,7)
-			end
-		end
 		if en_ref.kind==2 then
 			pal(9,11)
 			pal(8,3)
 		elseif en_ref.kind==1 then
 			pal(9,15)
 			pal(8,2)
+		end
+		if en_ref.flash>=0 then
+			en_ref.flash-=1
+			for i=1,15 do
+				pal(i,7)
+			end
 		end
 		drw_obj(en_ref)
 		pal()

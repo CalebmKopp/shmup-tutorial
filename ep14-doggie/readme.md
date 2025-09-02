@@ -6,6 +6,28 @@
 
 ## Challenge 1
 - use `pal()` function to create different color enemies on screen, without drawing more sprites for those enemies
+- add `kind=rnd(3)\1` to `spawnen()` to randomize the kind between 0,1,2
+- drawing different colors code
+  ```lua
+  --_draw()
+	for en_ref in all(enemies) do
+		if en_ref.flash>=0 then
+			en_ref.flash-=1
+			for i=1,15 do
+				pal(i,7)
+			end
+		end
+		if en_ref.kind==2 then
+			pal(9,11) --green!
+			pal(8,3)
+		elseif en_ref.kind==1 then
+			pal(9,15) --pink!
+			pal(8,2)
+		end
+		drw_obj(en_ref) --orange!
+		pal()
+	end
+  ```
 ## Challenge 2
 - when player is hit, make the ship flash (using pallette swapping) instead of oscillating on/off
 ## Challenge 3
