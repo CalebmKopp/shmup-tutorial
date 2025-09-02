@@ -56,7 +56,8 @@ function start_game()
 		y=64,
 		xspd=0,
 		yspd=0,
-		spr=36
+		spr=36,
+		flash=0
 	}
 	boost={
 		spr=6,
@@ -263,6 +264,15 @@ function explode(x,y)
 	add(booms,boom_ref)
 end
 
+function flash(obj)
+	if obj.flash>0 then
+		obj.flash-=1
+		for i=1,15 do
+			pal(i,7)
+		end
+	end
+end
+
 --console.log(...) 😐
 function debug(msg, exp)
 	msg = msg or "."
@@ -375,7 +385,8 @@ function update_game()
 			if col(en_ref,ship) then
 				lives-=1
 				sfx(0)
-				invuln=60
+				invuln=30
+				ship.flash=30
 			end
 		end
 	else
@@ -441,8 +452,10 @@ function draw_game()
 	if invuln<=0 then
 		drw_obj(ship)
 	else
-	if sin(t/5)>-0.1 then
+		if sin(t/5)>-0.1 then
+			flash(ship)
 			drw_obj(ship)
+			pal()
 		end
 	end
 	drw_obj(boost)
@@ -456,12 +469,7 @@ function draw_game()
 			pal(9,15)
 			pal(8,2)
 		end
-		if en_ref.flash>=0 then
-			en_ref.flash-=1
-			for i=1,15 do
-				pal(i,7)
-			end
-		end
+		flash(en_ref)
 		drw_obj(en_ref)
 		pal()
 	end

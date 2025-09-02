@@ -29,7 +29,8 @@
 	end
   ```
 ## Challenge 2
-- when player is hit, make the ship flash (using pallette swapping) instead of oscillating on/off
+- when player is hit, make the ship flash (using pallette swapping) along with the current oscillation
+- done, very easy - kind of messy call flash, then draw, then do pal()
 ## Challenge 3
 - when a bullet hits an enemy, make a small contact explosion - nothing fancy 
   - I think the way i wanna do this, is with `circfill()`
