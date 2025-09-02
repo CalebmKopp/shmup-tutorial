@@ -49,6 +49,8 @@ end
 function start_game()
 	mode='game'
 	t=0
+	dbg={}
+	
 	ship={
 		x=64,
 		y=64,
@@ -68,17 +70,16 @@ function start_game()
 	buls={}
 	enemies={}
 	booms={}
+	minis={}
 	
 	spawnen()
 	
 	score=0
-	
 	lives=4
 	invuln=0
-
 	bombs=2
 	
-	dbg={}
+	
 end
 -->8
 -- tools
@@ -136,15 +137,7 @@ function drw_stars(star_cols)
 	--for every star
 	for i=1,#stars do
 		local star_ref=stars[i]
-		-- if star_ref.fast then
-		-- 	--draw a line
-		-- 	line(star_ref.x, star_ref.y,star_ref.x,star_ref.y-4,star_ref.col)
-		-- else
-		-- 	--draw a pixel
-		-- 	pset(star_ref.x, star_ref.y, star_ref.col)
-		-- end
 		pset(star_ref.x, star_ref.y, star_ref.col)
-
 	end
 end
 
@@ -258,20 +251,13 @@ function spawnen()
 	add(enemies, myen)
 end
 
-function explode(x,y,kind)
-	kind = kind or "lrg"
-	
+function explode(x,y)
 	local boom_ref={
 	 x=x-4,
 	 y=y-4,
 	 age=1,
 	}
-	if (kind=="lrg") then
-		boom_ref.spr=64
-	else
-		boom_ref.spr=96
-		debug("sml "..t)
-	end
+	boom_ref.spr=64
 	add(booms,boom_ref)
 end
 
@@ -365,7 +351,7 @@ function update_game()
 		for bul_ref in all(buls) do
 			if col(bul_ref,en_ref) then
 				del(buls, bul_ref)
-				explode(bul_ref.x,bul_ref.y,"sml")
+				add(minis,bul_ref)
 				en_ref.hp-=bul_ref.dmg
 				sfx(4)
 				en_ref.flash=2
@@ -479,7 +465,12 @@ function draw_game()
 		circfill(ship.x+3,ship.y-2,muzzle,7)
 		circfill(ship.x+4,ship.y-2,muzzle,7)
 	end
-	
+	--draw minis
+	for m in all(minis) do
+		circfill(m.x+3, m.y, 2, 11)
+		circfill(m.x+4, m.y, 2, 11)
+		rectfill(m.x+3, m.y-1, m.x+4, m.y+1, 7) 
+	end
 	--draw booms
 	local boom_ages={64,64,64,66,68,68,70,72,72}
 	for boom_ref in all(booms) do
@@ -492,7 +483,6 @@ function draw_game()
 			h=2,
 			spr=boom_ages[flr(boom_ref.age)]
 		}	
-		
 		drw_obj(b)
 		
 		boom_ref.age+=1
