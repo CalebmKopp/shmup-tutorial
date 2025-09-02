@@ -351,7 +351,7 @@ function update_game()
 		for bul_ref in all(buls) do
 			if col(bul_ref,en_ref) then
 				del(buls, bul_ref)
-				add(minis,bul_ref)
+				add(minis,{x=bul_ref.x,y=bul_ref.y,life=4})
 				en_ref.hp-=bul_ref.dmg
 				sfx(4)
 				en_ref.flash=2
@@ -467,9 +467,17 @@ function draw_game()
 	end
 	--draw minis
 	for m in all(minis) do
+		if m.life%2==0 then
+			pal(11,3)
+		end
 		circfill(m.x+3, m.y, 2, 11)
 		circfill(m.x+4, m.y, 2, 11)
 		rectfill(m.x+3, m.y-1, m.x+4, m.y+1, 7) 
+		pal()
+		m.life-=1
+		if (m.life <= 0) then
+			del(minis,m)
+		end
 	end
 	--draw booms
 	local boom_ages={64,64,64,66,68,68,70,72,72}
