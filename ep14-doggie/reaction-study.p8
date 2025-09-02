@@ -474,6 +474,7 @@ function draw_game()
 		circfill(ship.x+3,ship.y-2,muzzle,7)
 		circfill(ship.x+4,ship.y-2,muzzle,7)
 	end
+	
 	--draw minis
 	for m in all(minis) do
 		if m.life%2==0 then

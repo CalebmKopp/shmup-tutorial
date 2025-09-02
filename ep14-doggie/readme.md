@@ -11,20 +11,20 @@
   ```lua
   --_draw()
 	for en_ref in all(enemies) do
+		if en_ref.kind==2 then
+			pal(9,11)
+			pal(8,3)
+		elseif en_ref.kind==1 then
+			pal(9,15)
+			pal(8,2)
+		end
 		if en_ref.flash>=0 then
 			en_ref.flash-=1
 			for i=1,15 do
 				pal(i,7)
 			end
 		end
-		if en_ref.kind==2 then
-			pal(9,11) --green!
-			pal(8,3)
-		elseif en_ref.kind==1 then
-			pal(9,15) --pink!
-			pal(8,2)
-		end
-		drw_obj(en_ref) --orange!
+		drw_obj(en_ref)
 		pal()
 	end
   ```
