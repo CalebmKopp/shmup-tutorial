@@ -21,6 +21,32 @@
 		circfill(ship.x+4,ship.y-2,muzzle,7)
 	end
   ```
+  - mini explosion drawing
+  ```lua
+  --_update()
+  ...
+  if col(bul_ref,en_ref) then
+    del(buls, bul_ref)
+    add(minis,{x=bul_ref.x,y=bul_ref.y,life=4})
+  ...
+  --_draw()
+	for m in all(minis) do
+		if m.life%2==0 then
+			pal(11,3)
+		end
+		circfill(m.x+3, m.y, 2, 11)
+		circfill(m.x+4, m.y, 2, 11)
+		rectfill(m.x+3, m.y-1, m.x+4, m.y+1, 7) 
+		pal()
+		m.life-=1
+		if (m.life <= 0) then
+			del(minis,m)
+		end
+	end
+  ```
+  - when bullet hit enemy, we add a mini explosion with 4 frames of life
+  - when we render that list, we pallette swap rapidly and then it disappears
+  - good enough for now lol
 ## Notes
 - "An explosion must always been bigger than the thing it explodes" important axiom
 - maybe next episode, is make explosions procedurally - since, when we create explosions manually in the spritesheet with a sprite index array and manual sprite choices in that array, it takes up a lot of space, tokens, and time/effort
